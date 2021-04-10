@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPSWAT_Assignment", "OPSWAT_Assignment\OPSWAT_Assignment.csproj", "{3691D9C6-AD29-4B80-9DDF-BE36095BE6E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OPSWAT_Assignment_Tests", "OPSWAT_Assignment_Tests\OPSWAT_Assignment_Tests.csproj", "{179C833A-32E6-4F09-963B-C209720F36DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3691D9C6-AD29-4B80-9DDF-BE36095BE6E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3691D9C6-AD29-4B80-9DDF-BE36095BE6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3691D9C6-AD29-4B80-9DDF-BE36095BE6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3691D9C6-AD29-4B80-9DDF-BE36095BE6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{179C833A-32E6-4F09-963B-C209720F36DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{179C833A-32E6-4F09-963B-C209720F36DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{179C833A-32E6-4F09-963B-C209720F36DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{179C833A-32E6-4F09-963B-C209720F36DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {329116C0-BA36-4631-96D2-A55D521C2B17}
+	EndGlobalSection
+EndGlobal
