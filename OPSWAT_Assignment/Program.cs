@@ -16,7 +16,7 @@ namespace OPSWAT_Assignment
             try
             {
                 string filePath = @"C:\Users\Ravi Garimella\source\repos\OPSWAT_Assignment\OPSWAT_Assignment\SampleFile.txt";
-                //if (args.Length != 0)
+                //if (args != null && args.Length != 0)
                 //{
                 //using (StreamReader sr = new StreamReader(args[0]))
                 //    {
@@ -53,7 +53,7 @@ namespace OPSWAT_Assignment
                             Console.WriteLine(responseMessage);
                         }
 
-                // Get the URL for POST request from the config file
+                // Get the File Upload URL for POST request from the config file
                 var postUrl = ConfigurationManager.AppSettings["apiPostUrl"];
 
                 fileHash.UploadFilesToServer(postUrl, byteToStringValue);

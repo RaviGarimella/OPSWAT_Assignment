@@ -19,8 +19,8 @@ namespace OPSWAT_Assignment_Tests
         [Test]
         public void TestCalculateHashOfGivenFileSuccess()
         {
-            string fileName = "Sample File Name";
-            var result = _fileHashService.CalculateHashOfGivenFile(fileName);
+            string filePath = @"C:\Users\Ravi Garimella\source\repos\OPSWAT_Assignment\OPSWAT_Assignment\SampleFile.txt";
+            var result = _fileHashService.CalculateHashOfGivenFile(filePath);
             Assert.IsNotNull(result);
             Assert.Greater(result.Length, 0);
         }
@@ -31,7 +31,6 @@ namespace OPSWAT_Assignment_Tests
             string fileName = string.Empty;
             var result = _fileHashService.CalculateHashOfGivenFile(fileName);
             Assert.IsNull(result);
-            Assert.Less(result.Length, 0);
         }
 
         [Test]

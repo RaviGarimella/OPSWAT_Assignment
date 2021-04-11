@@ -25,11 +25,11 @@ namespace OPSWAT_Assignment
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public byte[] CalculateHashOfGivenFile(string fileName)
+        public byte[] CalculateHashOfGivenFile(string filePath)
         {
-            if (!string.IsNullOrEmpty(fileName))
+            if (!string.IsNullOrEmpty(filePath))
             {
-                using (FileStream fileStream = File.OpenRead(fileName))
+                using (FileStream fileStream = File.OpenRead(filePath))
                 {
                     return sha256.ComputeHash(fileStream);
                 }
