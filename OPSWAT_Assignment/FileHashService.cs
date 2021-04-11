@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace OPSWAT_Assignment
 {
     /// <summary>
-    /// This class contains the methods for performing hash on a given file
+    /// This class contains the methods required for the project
     /// </summary>
     public class FileHashService : IFileHashService
     {

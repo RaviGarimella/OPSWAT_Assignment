@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OPSWAT_Assignment\OPSWAT_Assignment.csproj" />
+  </ItemGroup>
+
 </Project>
