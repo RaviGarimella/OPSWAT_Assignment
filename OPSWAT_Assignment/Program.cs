@@ -15,15 +15,19 @@ namespace OPSWAT_Assignment
         {
             try
             {
-                if (args.Length != 0)
-                {
-                    using (StreamReader sr = new StreamReader(args[0]))
-                    {
+                string filePath = @"C:\Users\Ravi Garimella\source\repos\OPSWAT_Assignment\OPSWAT_Assignment\SampleFile.txt";
+                //if (args.Length != 0)
+                //{
+                //using (StreamReader sr = new StreamReader(args[0]))
+                //    {
                         // Get the API key from the config file
                         var apiKey = ConfigurationManager.AppSettings["apiKey"];
 
+                        // Get the URL for GET request from the config file
+                        var getUrl = ConfigurationManager.AppSettings["apiGetUrl"];
+
                         IFileHashService fileHash = new FileHashService();
-                        String filePath = sr.ReadToEnd();
+                        //String filePath = sr.ReadToEnd();
 
                         // Calculate the sha256 hash of given file
                         byte[] fileHashValue = fileHash.CalculateHashOfGivenFile(filePath);
@@ -31,21 +35,30 @@ namespace OPSWAT_Assignment
                         // Convert the calculated hash value to string
                         string byteToStringValue = fileHash.ByteArrayToString(fileHashValue);
 
-                        // use the HttpClient to initiate the GET request to the Metadefender API
+                        // Use the HttpClient to initiate the GET request to the Metadefender API
                         using var client = new HttpClient();
                         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(apiKey);
-                        var result = client.GetAsync("https://api.metadefender.com/v4/file");
+                        var response = client.GetAsync(getUrl);
 
-                        if(result.Status == TaskStatus.RanToCompletion)
+                        if(response.Result.StatusCode == System.Net.HttpStatusCode.OK)
                         {
-                            Console.WriteLine(result.ToString());
+                            string message = "The Website is up, Please find the details below: ";
+                            string responseMessage = fileHash.GenerateAPIResponse(response, message);
+                            Console.WriteLine(responseMessage);
                         }
                         else
                         {
-                            Console.WriteLine($"Error occurred, the status code is: {result.Status}");
+                            string message = "Error occurred, Please find the details below: ";
+                            string responseMessage = fileHash.GenerateAPIResponse(response, message);
+                            Console.WriteLine(responseMessage);
                         }
-                    }
-                }
+
+                // Get the URL for POST request from the config file
+                var postUrl = ConfigurationManager.AppSettings["apiPostUrl"];
+
+                fileHash.UploadFilesToServer(postUrl, byteToStringValue);
+                    //}
+                //}
             }
             catch(Exception ex)
             {
