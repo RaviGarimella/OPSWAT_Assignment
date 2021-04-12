@@ -8,5 +8,7 @@ STEPS TO EXECUTE:
 
 3. Goto Execute folder by executing: "cd Execute"
 
-4. Run command "dotnet OPSWAT_Assignment.dll <filename>" and press Enter
+4. Open "OPSWAT_Assignment.dll.config" file and paste your API key in appsettings
+
+5. Run command "dotnet OPSWAT_Assignment.dll <filename>" and press Enter
    Eg: dotnet OPSWAT_Assignment.dll SampleFile.txt
