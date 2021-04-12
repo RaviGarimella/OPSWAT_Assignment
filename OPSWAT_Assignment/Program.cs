@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace OPSWAT_Assignment
 {
@@ -15,64 +16,51 @@ namespace OPSWAT_Assignment
         {
             try
             {
-                string filePath = @"C:\Users\Ravi Garimella\source\repos\OPSWAT_Assignment\OPSWAT_Assignment\SampleFile.txt";
-                //if (args != null && args.Length != 0)
-                //{
-                //using (StreamReader sr = new StreamReader(args[0]))
-                //    {
-                        // Get the API key from the config file
-                        var apiKey = ConfigurationManager.AppSettings["apiKey"];
+                if (args != null && args.Length != 0)
+                {  
+                    // Get the file path location
+                    string filePath = args[0];
 
-                        // Get the URL for GET request from the config file
-                        var getUrl = ConfigurationManager.AppSettings["apiGetUrl"];
+                    // Get the API key from the config file
+                    var apiKey = ConfigurationManager.AppSettings["apiKey"];
 
-                        IFileHashService fileHash = new FileHashService();
-                        //String filePath = sr.ReadToEnd();
+                    // Get the URL for GET request from the config file
+                    var getUrl = ConfigurationManager.AppSettings["apiGetUrl"];
 
-                        // Calculate the sha256 hash of given file
-                        byte[] fileHashValue = fileHash.CalculateHashOfGivenFile(filePath);
+                    IFileHashService fileHash = new FileHashService();
 
-                        // Convert the calculated hash value to string
-                        string byteToStringValue = fileHash.ByteArrayToString(fileHashValue);
+                    // Calculate the MD5 hash value of the given file
+                    string md5HashValue = fileHash.CalculateMD5(filePath);                    
 
-                        // Use the HttpClient to initiate the GET request to the Metadefender API
-                        using var client = new HttpClient();
-                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(apiKey);
-                        var response = client.GetAsync(getUrl);
+                    // Use the HttpClient to initiate the GET request to the Metadefender API
+                    using var client = new HttpClient();
+                    client.BaseAddress = new Uri(getUrl);
+                    client.DefaultRequestHeaders.Add("apiKey", apiKey);
+                    
+                    string response = fileHash.GetFileByHashValue(md5HashValue, filePath);
 
-                        if(response.Result.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            string message = "The Website is up, Please find the details below: ";
-                            string responseMessage = fileHash.GenerateAPIResponse(response, message);
-                            Console.WriteLine(responseMessage);
-                        }
-                        else
-                        {
-                            string message = "Error occurred, Please find the details below: ";
-                            string responseMessage = fileHash.GenerateAPIResponse(response, message);
-                            Console.WriteLine(responseMessage);
-                        }
-
-                // Get the File Upload URL for POST request from the config file
-                var postUrl = ConfigurationManager.AppSettings["apiPostUrl"];
-
-                fileHash.UploadFilesToServer(postUrl, byteToStringValue);
-                    //}
-                //}
+                    // If previously cached results of given file is present, display its response
+                    if (response != string.Empty)
+                    {
+                        Console.WriteLine(response);
+                    }
+                    else  // If the file is scanned for first time, upload the file to server and make GET request to API in intervals
+                    {
+                        var responseObj = fileHash.UploadFile(filePath);
+                        Thread.Sleep(10000);
+                        string dataResponse = fileHash.GetFileById(responseObj.data_id, filePath);
+                        Console.WriteLine(dataResponse);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please provide a file to scan");
+                }
             }
-            catch(Exception ex)
-            {
+            catch (Exception ex)
+            {                
                 Console.WriteLine($"The File scan is Unsuccessful. The error message is: {ex.Message}");
             }
         }        
     }
-
-    //static TextReader input = Console.In;
-    //var path = args[0];
-    //if(File.Exists(path))
-    //{
-    //    input = File.OpenText(path);
-    //}
-    //foreach (string s in args)
-    //string fileName = @"C:\Users\Ravi Garimella\source\repos\OPSWAT_Assignment\OPSWAT_Assignment\SampleFile.txt";
 }

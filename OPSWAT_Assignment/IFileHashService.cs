@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using OPSWAT_Assignment.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -12,32 +14,34 @@ namespace OPSWAT_Assignment
     /// </summary>
     public interface IFileHashService
     {
+
         /// <summary>
         /// This method is used to generate the hash of a given file
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        byte[] CalculateHashOfGivenFile(string fileName);
+        string CalculateMD5(string filename);
 
         /// <summary>
-        /// This method is used to convert a byte array to string
+        /// This method is used to initiate a Post request to upload file to server and return response object
         /// </summary>
-        /// <param name="fileBytes"></param>
-        /// <returns></returns>
-        string ByteArrayToString(byte[] fileBytes);
+        /// <param name="path"></param>
+        RootObject UploadFile(string path);
 
         /// <summary>
-        /// This method is used to upload file to server
+        /// This method is used to make a Get Api call using the file hash value
         /// </summary>
-        /// <param name="uri"></param>
+        /// <param name="fileHashValue"></param>
         /// <param name="fileName"></param>
-        void UploadFilesToServer(string postUrl, string fileName);
+        /// <returns></returns>
+        string GetFileByHashValue(string fileHashValue, string fileName);
 
         /// <summary>
-        /// This method is used to construct the API response message
+        /// This method is used to make a Get Api call using the data Id received from uploading the file
         /// </summary>
-        /// <param name="response"></param>
+        /// <param name="id"></param>
+        /// <param name="fileName"></param>
         /// <returns></returns>
-        string GenerateAPIResponse(Task<HttpResponseMessage> response, string message);
+        string GetFileById(string id, string fileName);
     }
 }

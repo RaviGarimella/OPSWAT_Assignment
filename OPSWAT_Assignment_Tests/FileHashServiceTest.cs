@@ -8,7 +8,7 @@ namespace OPSWAT_Assignment_Tests
     /// </summary>
     public class Tests
     {
-        private FileHashService _fileHashService;
+        private IFileHashService _fileHashService;
 
         [SetUp]
         public void Setup()
@@ -20,7 +20,7 @@ namespace OPSWAT_Assignment_Tests
         public void TestCalculateHashOfGivenFileSuccess()
         {
             string filePath = @"C:\Users\Ravi Garimella\source\repos\OPSWAT_Assignment\OPSWAT_Assignment\SampleFile.txt";
-            var result = _fileHashService.CalculateHashOfGivenFile(filePath);
+            var result = _fileHashService.CalculateMD5(filePath);
             Assert.IsNotNull(result);
             Assert.Greater(result.Length, 0);
         }
@@ -29,29 +29,16 @@ namespace OPSWAT_Assignment_Tests
         public void TestCalculateHashOfGivenFileFailure()
         {
             string fileName = string.Empty;
-            var result = _fileHashService.CalculateHashOfGivenFile(fileName);
+            var result = _fileHashService.CalculateMD5(fileName);
             Assert.IsNull(result);
         }
 
         [Test]
-        public void TestByteArrayToString()
+        public void TestUploadFile()
         {
-            // Create a byte array
-            var fileBytes = new byte[3];
-            fileBytes[0] = byte.MinValue;
-            fileBytes[1] = 0;
-            fileBytes[2] = byte.MaxValue;
-
-            var result = _fileHashService.ByteArrayToString(fileBytes);
-            Assert.IsNotNull(result);
-        }
-
-        [Test]
-        public void TestUploadFilesToServer()
-        {
-            string postUrl = "https://api.metadefender.com/v4/file";
-            string fileName = "Sample File Name";
-            _fileHashService.UploadFilesToServer(postUrl, fileName);
+            string filePath = @"C:\Users\Ravi Garimella\source\repos\OPSWAT_Assignment\OPSWAT_Assignment\SampleFile.txt";
+            var responseObj = _fileHashService.UploadFile(filePath);
+            Assert.IsNotNull(responseObj);
         }
     }
 }

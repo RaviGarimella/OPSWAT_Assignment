@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "OPSWAT_Assignment": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\Ravi Garimella\\source\\repos\\OPSWAT_Assignment\\OPSWAT_Assignment\\SampleFile.txt\""
+    }
+  }
+}
